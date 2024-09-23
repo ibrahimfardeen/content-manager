@@ -11,6 +11,21 @@ export default function Home() {
   const [header, setHeader] = useState("Click any of the above buttons");
   const [alldata, setAlldata] = useState(false);
 
+  const sendMail = async() => {
+
+    const res = await fetch("./api/mailer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        'message': 'mail',
+      }),
+    });
+    const response = await res.json();
+    console.log(JSON.stringify(response.data));
+  };
+
   const getData = async (eventname) => {
     setAlldata(false);
     setHeader("Loading, Please wait...");
@@ -235,6 +250,15 @@ export default function Home() {
               </button>
             </span>
           )}
+          <span>
+              <button
+                type="button"
+                onClick={() => sendMail()}
+                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+              >
+                AddEntry
+              </button>
+            </span>
         </div>
         <div className="flex items-center sm:justify-center ml-3 mr-3 border-spacing-y-2 text-2xl font-bold bg-red-800 font-medium rounded-lg px-5 py-2.5 me-2 mb-2 dark:bg-red-500">
           {header ? header : ""}
