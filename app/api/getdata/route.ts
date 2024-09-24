@@ -1,5 +1,5 @@
 import connectDB from "@/app/lib/mongodb";
-import Contact from "@/app/models/contact";
+import Product from "@/app/models/product";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 export async function POST(req) {
@@ -9,9 +9,9 @@ export async function POST(req) {
     await connectDB();
     var data = [];
     if(eventname == '')
-        data = await Contact.find({},{paymentfile:0});//
+        data = await Product.find({},{paymentfile:0});//
     else
-        data = await Contact.find({eventname: eventname},{paymentfile:0});
+        data = await Product.find({eventname: eventname},{paymentfile:0});
 
     // console.log(JSON.stringify(data));
     return NextResponse.json({

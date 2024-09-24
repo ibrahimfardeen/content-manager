@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import connectDB from "@/app/lib/mongodb";
-import Contact from "@/app/models/contact";
+import Product from "@/app/models/product";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 export async function POST(req) {
@@ -47,7 +47,7 @@ async function sendConfirmationEmail() {
 
 <p>We are committed to delivering an engaging, enlightening, and enjoyable experience during the event. Your attendance adds value to the occasion, and we look forward to a memorable time together.</p>
 
-<p>Additionally, If you have any queries or need further assistance, please feel free to reach out to the contacts below:</p>
+<p>Additionally, If you have any queries or need further assistance, please feel free to reach out to the Products below:</p>
 
 
 <p>Wishing you a fantastic day ahead!</p>

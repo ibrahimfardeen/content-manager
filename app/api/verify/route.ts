@@ -1,13 +1,13 @@
 import nodemailer from "nodemailer";
 import connectDB from "@/app/lib/mongodb";
-import Contact from "@/app/models/contact";
+import Product from "@/app/models/product";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 export async function POST(req) {
   const { event, verify } = await req.json();
   try {
     await connectDB();
-    await Contact.updateOne({ "_id" : event._id },
+    await Product.updateOne({ "_id" : event._id },
     { $set: { "verified" : verify } });
     console.log('updated');
     if(verify)
@@ -138,7 +138,7 @@ async function sendConfirmationEmail(event) {
 
 <p>We are committed to delivering an engaging, enlightening, and enjoyable experience during the event. Your attendance adds value to the occasion, and we look forward to a memorable time together.</p>
 
-<p>Additionally, If you have any queries or need further assistance, please feel free to reach out to the contacts below:</p>
+<p>Additionally, If you have any queries or need further assistance, please feel free to reach out to the Products below:</p>
 
 <p>${co1name} : ${co1num}<br>
 ${co2name} : ${co2num}</p>

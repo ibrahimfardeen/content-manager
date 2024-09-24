@@ -25,7 +25,6 @@ export default function Home() {
     const response = await res.json();
     console.log(JSON.stringify(response.data));
   };
-
   const getData = async (eventname) => {
     setAlldata(false);
     setHeader("Loading, Please wait...");
@@ -90,7 +89,6 @@ export default function Home() {
     const response = await res.json();
     getData(event.eventname);
   };
-
   const teamEvents = [
     "PAPER-DE-FIESTA",
     "TECH QUEST",
@@ -118,7 +116,6 @@ export default function Home() {
     "ALGO-RHYTHM": "ummhalith03@gmail.com",
     VOXRECK: "jeevidarajesh02@gmail.com",
   };
-
   if (session && session.user) {
     return (
       <>
@@ -132,124 +129,6 @@ export default function Home() {
               Sign Out
             </button>
           </span>
-          {access.admin.includes(session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                ALL EVENTS
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["PAPER-DE-FIESTA"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("PAPER-DE-FIESTA")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                PAPER-DE-FIESTA
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["DATABASE DETECTIVES"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("DATABASE DETECTIVES")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                DATABASE DETECTIVES
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["ALGO-RHYTHM"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("ALGO-RHYTHM")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                ALGO-RHYTHM
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["TECH QUEST"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("TECH QUEST")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                TECH QUEST
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["VOXRECK"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("VOXRECK")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                VOXRECK
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["IGNITE THE STAGE"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("IGNITE THE STAGE")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                IGNITE THE STAGE
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["ADRENALINE RUSH"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("ADRENALINE RUSH")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                ADRENALINE RUSH
-              </button>
-            </span>
-          )}
-          {(access.admin.includes(session.user.email) ||
-            access["IPL AUCTION"] == session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("IPL AUCTION")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                IPL AUCTION
-              </button>
-            </span>
-          )}
-          {access.admin.includes(session.user.email) && (
-            <span>
-              <button
-                type="button"
-                onClick={() => getData("BOOT TO ROOT")}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                BOOT TO ROOT
-              </button>
-            </span>
-          )}
           <span>
               <button
                 type="button"
@@ -270,16 +149,9 @@ export default function Home() {
                 <tr>
                   <th>S.No</th>
                   <th>Name</th>
-                  {(teamEvents.includes(header.split(" Total")[0]) ||
-                    alldata) && <th>Members</th>}
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>College</th>
-                  <th>Dept</th>
-                  <th>Year</th>
-                  {alldata && <th>Event</th>}
-                  <th>Date</th>
-                  <th>Payment</th>
+                  <th>Price</th>
+                  <th>Description</th>
+                  <th>Photo</th>
                 </tr>
               </thead>
             )}
@@ -287,87 +159,17 @@ export default function Home() {
               {data &&
                 data.map((event, index) => (
                   <tr key={index} className="tr-class">
-                    {(event.verified ||
-                      access.admin.includes(session.user.email)) && (
+                    {(
                       <>
                         <td className="td-class">{index + 1}</td>
                         <td className="td-class">{event.fullname}</td>
-                        {(teamEvents.includes(header.split(" Total")[0]) ||
-                          alldata) && (
-                          <td className="td-class">
-                            {event.teammembers} {/* .toString().split("\n").join(",")} */}
-                          </td>
-                        )}
                         <td className="td-class">{event.email}</td>
                         <td className="td-class">{event.phonenumber}</td>
                         <td className="td-class">{event.collegename}</td>
                         <td className="td-class">{event.department}</td>
                         <td className="td-class">{event.year}</td>
-                        {alldata && (
-                          <td className="td-class">{event.eventname}</td>
-                        )}
+                        <td className="td-class">{event.eventname}</td>
                         <td className="td-class">{date(event.date)}</td>
-                        <td className="sr-only sm:not-sr-only td-class">
-                          <button
-                            type="button"
-                            onClick={() => setSource(event.paymentfile)}
-                            className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                          >
-                            Show
-                          </button>
-                        </td>
-                        <td className="not-sr-only sm:sr-only td-class">
-                          <img src={event.paymentfile} alt="" />
-                        </td>
-                        {(() => {
-                          if (session.user.email != "choumya0703@gmail.com") {
-                            if (event.verified)
-                              return <td className="td-class">✅</td>;
-                            else return <td className="td-class">&#10060;</td>;
-                          }
-                        })()}
-                      </>
-                    )}
-                    {(() => {
-                      if (session.user.email == "choumya0703@gmail.com") {
-                        if (event.verified)
-                          return <td className="td-class">✅Verified</td>;
-                        else
-                          return (
-                            <td className="td-class">
-                              <button
-                                type="button"
-                                onClick={() => verify(event, true)}
-                                className="border-spacing-y-2 text-white bg-green-500 hover:bg-green-900 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-500 dark:hover:bg-green-700 dark:focus:ring-green-700 dark:border-green-700"
-                              >
-                                Verify
-                              </button>
-                            </td>
-                          );
-                      }
-                    })()}
-                    {session.user.email == "ibrahimfardeen.n@gmail.com" && (
-                      <>
-                        <td className="td-class">
-                          <button
-                            type="button"
-                            onClick={() => deleteData(event)}
-                            className="border-spacing-y-2 text-white bg-red-500 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-500 dark:hover:bg-red-700 dark:focus:ring-red-700 dark:border-red-700"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                        {event.verified && (
-                          <td className="td-class">
-                            <button
-                              type="button"
-                              onClick={() => verify(event, false)}
-                              className="border-spacing-y-2 text-white bg-yellow-500 hover:bg-yellow-900 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-yellow-500 dark:hover:bg-yellow-700 dark:focus:ring-yellow-700 dark:border-yellow-700"
-                            >
-                              Unverify
-                            </button>
-                          </td>
-                        )}
                       </>
                     )}
                   </tr>
