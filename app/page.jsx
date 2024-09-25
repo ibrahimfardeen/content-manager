@@ -138,6 +138,15 @@ export default function Home() {
                 AddEntry
               </button>
             </span>
+            <span>
+                <button
+                  type="button"
+                  onClick={() => getData()}
+                  className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                >
+                  Get data
+                </button>
+              </span>
         </div>
         <div className="flex items-center sm:justify-center ml-3 mr-3 border-spacing-y-2 text-2xl font-bold bg-red-800 font-medium rounded-lg px-5 py-2.5 me-2 mb-2 dark:bg-red-500">
           {header ? header : ""}
@@ -152,6 +161,8 @@ export default function Home() {
                   <th>Price</th>
                   <th>Description</th>
                   <th>Photo</th>
+                  <th>Updated</th>
+                  <th>Created</th>
                 </tr>
               </thead>
             )}
@@ -162,19 +173,17 @@ export default function Home() {
                     {(
                       <>
                         <td className="td-class">{index + 1}</td>
-                        <td className="td-class">{event.fullname}</td>
-                        <td className="td-class">{event.email}</td>
-                        <td className="td-class">{event.phonenumber}</td>
-                        <td className="td-class">{event.collegename}</td>
-                        <td className="td-class">{event.department}</td>
-                        <td className="td-class">{event.year}</td>
-                        <td className="td-class">{event.eventname}</td>
-                        <td className="td-class">{date(event.date)}</td>
+                        <td className="td-class">{event.name}</td>
+                        <td className="td-class">{event.price}</td>
+                        <td className="td-class">{event.description}</td>
+                        <td className="td-class">{event.photo}</td>
+                        <td className="td-class">{date(event.updated)}</td>
+                        <td className="td-class">{date(event.created)}</td>
                       </>
                     )}
                   </tr>
                 ))}
-            </tbody>
+            </tbody>  
           </table>
         </div>
         {source && <Modal source={source} onclose={handleclose} />}

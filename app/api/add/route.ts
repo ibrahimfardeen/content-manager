@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 
 export async function POST(req) {
-  const { name, price, description, photo, } = await req.json();
+  const { name, price, description, photo } = await req.json();
 
   try {
     await connectDB();

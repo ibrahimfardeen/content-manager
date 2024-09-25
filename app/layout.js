@@ -7,8 +7,8 @@ import Providers from './components/Providers';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Icon admin dashboard',
-  description: 'View all event registrations',
+  title: 'KVM Content Manager',
+  description: 'KVM C MART Content Management App',
 }
 
 export default function RootLayout({ children }) {
