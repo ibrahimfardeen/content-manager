@@ -4,6 +4,7 @@ import Modal from "./components/Modal";
 import SigninButton from "./components/SigninButton";
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import AddEntry from "./components/AddEntry";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -29,7 +30,7 @@ export default function Home() {
     setAlldata(false);
     setHeader("Loading, Please wait...");
     setData([]);
-    const res = await fetch("./api/getdata", {
+    const res = await fetch("./api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,17 +41,8 @@ export default function Home() {
     });
     const response = await res.json();
     console.log(JSON.stringify(response.data));
-    if (eventname == "" && response.data.length > 0) {
-      setAlldata(true);
-      setData(response.data);
-      setHeader("All Events Total Registration : " + response.data.length);
-    } else if (eventname != "" && response.data.length > 0) {
-      setData(response.data);
-      setHeader(eventname + " Total Registration : " + response.data.length);
-    } else {
-      setData([]);
-      setHeader("NO REGISTRATIONS YET!");
-    }
+    setData(response.data);
+    setHeader(" Total Products : " + response.data.length);
   };
   const date = (x) => {
     return new Date(x).toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
@@ -116,7 +108,7 @@ export default function Home() {
     "ALGO-RHYTHM": "ummhalith03@gmail.com",
     VOXRECK: "jeevidarajesh02@gmail.com",
   };
-  if (session && session.user) {
+  if (session && session.user && session.user.email == 'ibrahimfardeen.n@gmail.com') {
     return (
       <>
         <div className="border-spacing-y-2 ml-3 mr-3">
@@ -132,10 +124,10 @@ export default function Home() {
           <span>
               <button
                 type="button"
-                onClick={() => sendMail()}
+                onClick={() => setSource(true)}
                 className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
               >
-                AddEntry
+                Add Product
               </button>
             </span>
             <span>
@@ -144,7 +136,7 @@ export default function Home() {
                   onClick={() => getData()}
                   className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                 >
-                  Get data
+                  Get Products
                 </button>
               </span>
         </div>
@@ -176,7 +168,7 @@ export default function Home() {
                         <td className="td-class">{event.name}</td>
                         <td className="td-class">{event.price}</td>
                         <td className="td-class">{event.description}</td>
-                        <td className="td-class">{event.photo}</td>
+                        <td className="td-class"><img src={event.photo}/></td>
                         <td className="td-class">{date(event.updated)}</td>
                         <td className="td-class">{date(event.created)}</td>
                       </>
@@ -186,7 +178,7 @@ export default function Home() {
             </tbody>  
           </table>
         </div>
-        {source && <Modal source={source} onclose={handleclose} />}
+        {source && <AddEntry onclose={handleclose} />}
       </>
     );
   } else {
