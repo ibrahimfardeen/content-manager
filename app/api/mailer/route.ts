@@ -32,8 +32,8 @@ async function sendConfirmationEmail() {
       });
 
     const mailOptions = {
-    from: 'ibrahimfardeen.n@gmail.com',
-    to: 'ibrahimfardeen.n@gmail.com',
+    from: process.env.MAIL,
+    to: process.env.MAIL,
     subject: `Confirmation for Registration`,
     html: `Hello <b>bro</b>,
 
