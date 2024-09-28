@@ -5,12 +5,14 @@ import SigninButton from "./components/SigninButton";
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import AddEntry from "./components/AddEntry";
+import Edit from "./components/Edit";
 
 export default function Home() {
   const [data, setData] = useState([]);
   const [source, setSource] = useState(null);
   const [header, setHeader] = useState("Click any of the above buttons");
   const [alldata, setAlldata] = useState(false);
+  const [product, setProduct] = useState(null);
 
   const sendMail = async() => {
 
@@ -26,7 +28,7 @@ export default function Home() {
     const response = await res.json();
     console.log(JSON.stringify(response.data));
   };
-  const getData = async (eventname) => {
+  const getData = async () => {
     setAlldata(false);
     setHeader("Loading, Please wait...");
     setData([]);
@@ -36,19 +38,20 @@ export default function Home() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        eventname: eventname,
+        'message': 'getAll',
       }),
     });
     const response = await res.json();
-    console.log(JSON.stringify(response.data));
-    setData(response.data);
-    setHeader(" Total Products : " + response.data.length);
+    console.log(JSON.stringify(response.result.data));
+    setData(response.result.data);
+    setHeader(" Total Products : " + response.result.data.length);
   };
   const date = (x) => {
     return new Date(x).toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
   };
   const handleclose = () => {
     setSource(null);
+    setProduct(null)
   };
   const verify = async (event, verify) => {
     setHeader("Loading, Please wait...");
@@ -66,48 +69,24 @@ export default function Home() {
     const response = await res.json();
     getData("");
   };
-  const deleteData = async (event) => {
-    setHeader("Loading, Please wait...");
-    setData([]);
-    const res = await fetch("./api/delete", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        event: event,
-      }),
-    });
-    const response = await res.json();
-    getData(event.eventname);
+  const deleteData = async (product) => {
+    if(confirm('Are you sure you want to delete this product')){
+      setHeader("Loading, Please wait...");
+      setData([]);
+      const res = await fetch("./api/delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          product: product,
+        }),
+      });
+      const response = await res.json();
+      getData();
+    }
   };
-  const teamEvents = [
-    "PAPER-DE-FIESTA",
-    "TECH QUEST",
-    "IGNITE THE STAGE",
-    "ADRENALINE RUSH",
-    "IPL AUCTION",
-  ];
   const { data: session } = useSession();
-  const access = {
-    admin: [
-      "choumya0703@gmail.com",
-      "ibrahimfardeen.n@gmail.com",
-      "abdur.nashith7739@gmail.com",
-      "kailash61203@gmail.com",
-      "prem.v.kumar2002@gmail.com",
-      "salmanfarris2002@gmail.com",
-      "imrankhan02m@gmail.com",
-    ],
-    "IPL AUCTION": "mohamedafsar2222@gmail.com",
-    "PAPER-DE-FIESTA": "imabdulrahman.ms@gmail.com",
-    "TECH QUEST": "kamalesh.it.01@gmail.com",
-    "IGNITE THE STAGE": "",
-    "ADRENALINE RUSH": "fahirahumayun22@gmail.com",
-    "DATABASE DETECTIVES": "riyazsyed0602@gmail.com",
-    "ALGO-RHYTHM": "ummhalith03@gmail.com",
-    VOXRECK: "jeevidarajesh02@gmail.com",
-  };
   if (session && session.user && session.user.email == 'ibrahimfardeen.n@gmail.com') {
     return (
       <>
@@ -160,17 +139,33 @@ export default function Home() {
             )}
             <tbody>
               {data &&
-                data.map((event, index) => (
+                data.map((product, index) => (
                   <tr key={index} className="tr-class">
                     {(
                       <>
                         <td className="td-class">{index + 1}</td>
-                        <td className="td-class">{event.name}</td>
-                        <td className="td-class">{event.price}</td>
-                        <td className="td-class">{event.description}</td>
-                        <td className="td-class"><img src={event.photo}/></td>
-                        <td className="td-class">{date(event.updated)}</td>
-                        <td className="td-class">{date(event.created)}</td>
+                        <td className="td-class">{product.attributes.Name}</td>
+                        <td className="td-class">{product.attributes.Price}</td>
+                        <td className="td-class">{product.attributes.Desc}</td>
+                        <td className="td-class"><img src={product.attributes.img.data.attributes.url}/></td>
+                        <td className="td-class">{date(product.attributes.updatedAt)}</td>
+                        <td className="td-class">{date(product.attributes.createdAt)}</td>
+                        <td className="td-class">
+                          <button
+                            type="button"
+                            onClick={() => setProduct(product)}
+                            className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => deleteData(product)}
+                            className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </>
                     )}
                   </tr>
@@ -179,6 +174,7 @@ export default function Home() {
           </table>
         </div>
         {source && <AddEntry onclose={handleclose} />}
+        {product && <Edit product={product} onclose={handleclose} />}
       </>
     );
   } else {

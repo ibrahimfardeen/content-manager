@@ -18,7 +18,7 @@ export async function POST(req) {
     return NextResponse.json({
       msg: ["Data fetched successfully"],
       success: true,
-      data: data,
+      //data: data,
       result: responseObj(data)
     });
   } catch (error) {
@@ -47,33 +47,13 @@ export async function POST(req) {
                     "data": {
                         "id": products[i]._id,
                         "attributes": {
-                            "name": "''4.jpg",
                             "alternativeText": products[i].name,
-                            "caption": null,
-                            "width": 500,
-                            "height": 500,
                             "formats": {
                                 "thumbnail": {
-                                    "ext": ".jpg",
                                     "url": products[i].photo,
-                                    "hash": "thumbnail_4_e4a930dfc9",
-                                    "mime": "image/jpeg",
-                                    "name": "thumbnail_''4.jpg",
-                                    "path": null,
-                                    "size": 1.63,
-                                    "width": 156,
-                                    "height": 156,
-                                    "sizeInBytes": 1626
                                 }
                             },
-                            "hash": "4_e4a930dfc9",
-                            "ext": ".jpg",
-                            "mime": "image/jpeg",
-                            "size": 9.04,
                             "url": products[i].photo,
-                            "previewUrl": null,
-                            "provider": "strapi-provider-upload-strapi-cloud",
-                            "provider_metadata": null,
                             "createdAt": products[i].created,
                             "updatedAt": products[i].updated
                         }
