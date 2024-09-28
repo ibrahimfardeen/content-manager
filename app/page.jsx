@@ -42,9 +42,9 @@ export default function Home() {
       }),
     });
     const response = await res.json();
-    console.log(JSON.stringify(response.result.data));
-    setData(response.result.data);
-    setHeader(" Total Products : " + response.result.data.length);
+    console.log(JSON.stringify(response.data.data));
+    setData(response.data.data);
+    setHeader(" Total Products : " + response.data.data.length);
   };
   const date = (x) => {
     return new Date(x).toLocaleString("en-US", { timeZone: "Asia/Kolkata" });

@@ -19,7 +19,7 @@ export async function POST(req) {
       msg: ["Data fetched successfully"],
       success: true,
       //data: data,
-      result: responseObj(data)
+      data: responseObj(data)
     });
   } catch (error) {
       console.log(error);

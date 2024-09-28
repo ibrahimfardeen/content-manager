@@ -17,7 +17,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
         msg: ["Data fetched successfully"],
         success: true,
         //data: data,
-        result: responseObj(data)
+        data: responseObj(data)
       });
     } catch (error) {
         console.log(error);
