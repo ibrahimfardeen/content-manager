@@ -87,7 +87,8 @@ export default function Home() {
     }
   };
   const { data: session } = useSession();
-  if (session && session.user && session.user.email == 'ibrahimfardeen.n@gmail.com') {
+  const allowedUsers = ['ibrahimfardeen.n@gmail.com','kailash61203@gmail.com','prem.v.kumar2002@gmail.com'];
+  if (session && session.user && allowedUsers.includes(session.user.email)) {
     return (
       <>
         <div className="border-spacing-y-2 ml-3 mr-3">
