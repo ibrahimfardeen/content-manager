@@ -1,7 +1,7 @@
 const { NextResponse } = require("next/server");
 
-export function middleware(req) {
-  const alloworigins = ["http://localhost:5173"];
+export function middleware(req: Request) {
+  const alloworigins = process.env.DOMAIN_URL.split(",");
   const origin = req.headers.get("origin");
   console.log(origin);
   if (alloworigins.includes(origin)) {

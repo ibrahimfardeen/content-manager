@@ -7,7 +7,6 @@ import { Result } from "postcss";
 // Define the dynamic route handler
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const { id } = params;
-  
     try {
       await connectDB();
       var data = await Product.findOne({"_id": id});
