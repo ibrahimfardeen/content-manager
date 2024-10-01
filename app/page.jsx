@@ -26,6 +26,8 @@ export default function Home() {
     });
     const response = await res.json();
     console.log(JSON.stringify(response.data));
+
+    
   };
   const getData = async () => {
     setAlldata(false);
