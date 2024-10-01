@@ -3,18 +3,15 @@ import Product from "@/app/models/product";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { Result } from "postcss";
-export async function POST(req) {
-  const { eventname } = await req.json();
-
+export async function GET() {
+  // const { eventname } = await req.json();
+  const eventname = "ffgget";
   try {
     await connectDB();
     var data = [];
-    if(eventname == '')
-        data = await Product.find();//
-    else
-        data = await Product.find();
-
+    data = await Product.find()
     // console.log(JSON.stringify(data));
+    // console.log(req.header.origin)
     return NextResponse.json({
       msg: ["Data fetched successfully"],
       success: true,

@@ -14,15 +14,14 @@ export default function Home() {
   const [alldata, setAlldata] = useState(false);
   const [product, setProduct] = useState(null);
 
-  const sendMail = async() => {
-
+  const sendMail = async () => {
     const res = await fetch("./api/mailer", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        'message': 'mail',
+        message: "mail",
       }),
     });
     const response = await res.json();
@@ -33,25 +32,27 @@ export default function Home() {
     setHeader("Loading, Please wait...");
     setData([]);
     const res = await fetch("./api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        'message': 'getAll',
-      }),
+      method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     'message': 'getAll',
+      //   }),
+      // });
     });
     const response = await res.json();
-    console.log(JSON.stringify(response.data.data));
-    setData(response.data.data);
-    setHeader(" Total Products : " + response.data.data.length);
+    console.log(response)
+    // console.log(JSON.stringify(response.data.data));
+    setData(response.data?.data);
+    setHeader(" Total Products : " + response.data?.data?.length);
   };
   const date = (x) => {
     return new Date(x).toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
   };
   const handleclose = () => {
     setSource(null);
-    setProduct(null)
+    setProduct(null);
   };
   const verify = async (event, verify) => {
     setHeader("Loading, Please wait...");
@@ -70,7 +71,7 @@ export default function Home() {
     getData("");
   };
   const deleteData = async (product) => {
-    if(confirm('Are you sure you want to delete this product')){
+    if (confirm("Are you sure you want to delete this product")) {
       setHeader("Loading, Please wait...");
       setData([]);
       const res = await fetch("./api/delete", {
@@ -87,7 +88,11 @@ export default function Home() {
     }
   };
   const { data: session } = useSession();
-  const allowedUsers = ['ibrahimfardeen.n@gmail.com','kailash61203@gmail.com','prem.v.kumar2002@gmail.com'];
+  const allowedUsers = [
+    "ibrahimfardeen.n@gmail.com",
+    "kailash61203@gmail.com",
+    "prem.v.kumar2002@gmail.com",
+  ];
   if (session && session.user && allowedUsers.includes(session.user.email)) {
     return (
       <>
@@ -102,23 +107,23 @@ export default function Home() {
             </button>
           </span>
           <span>
-              <button
-                type="button"
-                onClick={() => setSource(true)}
-                className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-              >
-                Add Product
-              </button>
-            </span>
-            <span>
-                <button
-                  type="button"
-                  onClick={() => getData()}
-                  className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                >
-                  Get Products
-                </button>
-              </span>
+            <button
+              type="button"
+              onClick={() => setSource(true)}
+              className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+            >
+              Add Product
+            </button>
+          </span>
+          <span>
+            <button
+              type="button"
+              onClick={() => getData()}
+              className="border-spacing-y-2 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+            >
+              Get Products
+            </button>
+          </span>
         </div>
         <div className="flex items-center sm:justify-center ml-3 mr-3 border-spacing-y-2 text-2xl font-bold bg-red-800 font-medium rounded-lg px-5 py-2.5 me-2 mb-2 dark:bg-red-500">
           {header ? header : ""}
@@ -142,15 +147,23 @@ export default function Home() {
               {data &&
                 data.map((product, index) => (
                   <tr key={index} className="tr-class">
-                    {(
+                    {
                       <>
                         <td className="td-class">{index + 1}</td>
                         <td className="td-class">{product.attributes.Name}</td>
                         <td className="td-class">{product.attributes.Price}</td>
                         <td className="td-class">{product.attributes.Desc}</td>
-                        <td className="td-class"><img src={product.attributes.img.data.attributes.url}/></td>
-                        <td className="td-class">{date(product.attributes.updatedAt)}</td>
-                        <td className="td-class">{date(product.attributes.createdAt)}</td>
+                        <td className="td-class">
+                          <img
+                            src={product.attributes.img.data.attributes.url}
+                          />
+                        </td>
+                        <td className="td-class">
+                          {date(product.attributes.updatedAt)}
+                        </td>
+                        <td className="td-class">
+                          {date(product.attributes.createdAt)}
+                        </td>
                         <td className="td-class">
                           <button
                             type="button"
@@ -168,10 +181,10 @@ export default function Home() {
                           </button>
                         </td>
                       </>
-                    )}
+                    }
                   </tr>
                 ))}
-            </tbody>  
+            </tbody>
           </table>
         </div>
         {source && <AddEntry onclose={handleclose} />}
