@@ -55,20 +55,26 @@ export default function Home() {
     setProduct(null);
   };
   const verify = async (event, verify) => {
-    setHeader("Loading, Please wait...");
-    setData([]);
-    const res = await fetch("./api/verify", {
+    // setHeader("Loading, Please wait...");
+    // setData([]);
+    const res = await fetch("./api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        event: event,
-        verify: verify,
+        Name: "a",
+        Email: "a",
+        PhoneNumber: "a",
+        Location: "a",
+        Address: "a",
+        TotalPrice: 1200,
+        ProductDetails: [], 
       }),
     });
     const response = await res.json();
-    getData("");
+    console.log(response)
+    // getData("");
   };
   const deleteData = async (product) => {
     if (confirm("Are you sure you want to delete this product")) {
@@ -97,6 +103,7 @@ export default function Home() {
     return (
       <>
         <div className="border-spacing-y-2 ml-3 mr-3">
+          <button onClick={()=> verify()}>Verify</button>
           <span>
             <button
               type="button"
