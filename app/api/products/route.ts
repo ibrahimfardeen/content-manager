@@ -23,6 +23,7 @@ export async function GET() {
     return NextResponse.json({ msg: ["Unable to get message."] });
   }
 
+  
   function responseObj(products) {
     // implement resource here
     var result = {
