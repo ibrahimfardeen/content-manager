@@ -21,27 +21,27 @@ export async function POST(req) {
 async function sendConfirmationEmail(data) {
 
     var productDetails = data.ProductDetails;
-
-    var productDetailsContent = '<table>';
-    productDetailsContent += '<tr>';
-    productDetailsContent += '<th>Name</th>';
-    productDetailsContent += '<th>Price</th>';
-    productDetailsContent += '<th>Quantity</th>';
-    productDetailsContent += '<th>Total</th>';
-    productDetailsContent += '</tr>';
+    var tableCSS = 'style="border:1px solid black;border-collapse:collapse;"'
+    var productDetailsContent = `<table ${tableCSS}>`;
+    productDetailsContent += `<tr ${tableCSS}>`;
+    productDetailsContent += `<th ${tableCSS}>Name</th>`;
+    productDetailsContent += `<th ${tableCSS}>Price</th>`;
+    productDetailsContent += `<th ${tableCSS}>Quantity</th>`;
+    productDetailsContent += `<th ${tableCSS}>Total(&#8377;)</th>`;
+    productDetailsContent += `</tr>`;
     for(let i of productDetails){
-      productDetailsContent += '<tr>';
-      productDetailsContent += '<td>' + i.name + '</td>';
-      productDetailsContent += '<td>' + i.price + '</td>';
-      productDetailsContent += '<td>' + i.quantity + '</td>';
-      productDetailsContent += '<td>' + i.price * i.quantity + '</td>';
-      productDetailsContent += '</tr>';
+      productDetailsContent += `<tr ${tableCSS}>`;
+      productDetailsContent += `<td ${tableCSS}>` + i.name + `</td>`;
+      productDetailsContent += `<td ${tableCSS}>` + i.price + `</td>`;
+      productDetailsContent += `<td ${tableCSS}>` + i.quantity + `</td>`;
+      productDetailsContent += `<td ${tableCSS}>` + i.price * i.quantity + `</td>`;
+      productDetailsContent += `</tr>`;
     }
-    productDetailsContent += '<tr>';
-    productDetailsContent += '<td colspan="3">' + + '</td>';
-    productDetailsContent += '<td>' + data.TotalPrice + '</td>';
-    productDetailsContent += '</tr>';
-    productDetailsContent += '</table>';
+    productDetailsContent += `<tr ${tableCSS}>`;
+    productDetailsContent += `<td ${tableCSS} colspan="3"><b>Grand total</b></td>`;
+    productDetailsContent += `<td ${tableCSS}><b>` + data.TotalPrice + `</b></td>`;
+    productDetailsContent += `</tr>`;
+    productDetailsContent += `</table>`;
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -50,18 +50,18 @@ async function sendConfirmationEmail(data) {
           pass: process.env.PASSWORD
         },
       });
-    var date = new Date();
+    var date = new Date().toLocaleString();
 
     const mailOptions = {
     from: process.env.MAIL,
     to: data.Email,
     subject: `Your Order Has Been Successfully Placed!`,
-    html: `<p>Dear ${data.Name}</p>,
+    html: `<p>Dear ${data.Name},</p>
 
 <p>Thank you for shopping with KVM CMart! We are pleased to inform you that your order has been successfully placed. Our team is processing it, and we will notify you once it's ready for shipment.</p>
 
-<p>Order Details:</p>
-Order Number: 123456
+<p><b>Order Details:</b></p>
+Order Number: 123456<br>
 Date: ${date}
 <p>Below is a summary of your order:</p>
 ${productDetailsContent}
