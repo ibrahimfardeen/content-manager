@@ -1,9 +1,34 @@
 import nodemailer from "nodemailer";
 import connectDB from "@/app/lib/mongodb";
 import Product from "@/app/models/product";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
-export async function POST(req) {
+
+const getCorsHeaders = (origin: string) => {
+  const headers = {
+    "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+    "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+    "Access-Control-Allow-Origin": ""
+  };
+  if (process.env.DOMAIN_URL.includes(origin)) {
+    headers["Access-Control-Allow-Origin"] = origin; 
+  }
+
+  return headers;
+};
+
+export const OPTIONS = async (request: NextRequest) => {
+  console.log("getting in ");
+  return NextResponse.json(
+    {},
+    {
+      status: 200,
+      headers: getCorsHeaders(request.headers.get("origin") || ""),
+    }
+  );
+};
+
+export async function POST(req: NextRequest) {
   const data = await req.json();
   try {
 
@@ -12,10 +37,18 @@ export async function POST(req) {
     return NextResponse.json({
       msg: ["Sent successfully"],
       success: true
+    },
+    {
+      status: 200,
+      headers: getCorsHeaders(req.headers.get("origin") || ""),
     });
   } catch (error) {
       console.log(error);
-      return NextResponse.json({ msg: ["Unable to send."] });
+      return NextResponse.json({ msg: ["Unable to send."] },
+        {
+          status: 500,
+          headers: getCorsHeaders(req.headers.get("origin") || ""),
+        });
     }
 }
 async function sendConfirmationEmail(data) {
