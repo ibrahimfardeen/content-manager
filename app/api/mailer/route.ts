@@ -4,10 +4,10 @@ import Product from "@/app/models/product";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 export async function POST(req) {
-  const message = await req.json();
+  const data = await req.json();
   try {
 
-    await sendConfirmationEmail();
+    await sendConfirmationEmail(data);
 
     return NextResponse.json({
       msg: ["Sent successfully"],
@@ -17,12 +17,32 @@ export async function POST(req) {
       console.log(error);
       return NextResponse.json({ msg: ["Unable to send."] });
     }
-    
-  
-
 }
-async function sendConfirmationEmail() {
-  
+async function sendConfirmationEmail(data) {
+
+    var productDetails = data.ProductDetails;
+
+    var productDetailsContent = '<table>';
+    productDetailsContent += '<tr>';
+    productDetailsContent += '<th>Name</th>';
+    productDetailsContent += '<th>Price</th>';
+    productDetailsContent += '<th>Quantity</th>';
+    productDetailsContent += '<th>Total</th>';
+    productDetailsContent += '</tr>';
+    for(let i of productDetails){
+      productDetailsContent += '<tr>';
+      productDetailsContent += '<td>' + i.name + '</td>';
+      productDetailsContent += '<td>' + i.price + '</td>';
+      productDetailsContent += '<td>' + i.quantity + '</td>';
+      productDetailsContent += '<td>' + i.price * i.quantity + '</td>';
+      productDetailsContent += '</tr>';
+    }
+    productDetailsContent += '<tr>';
+    productDetailsContent += '<td colspan="3">' + + '</td>';
+    productDetailsContent += '<td>' + data.TotalPrice + '</td>';
+    productDetailsContent += '</tr>';
+    productDetailsContent += '</table>';
+
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -30,30 +50,28 @@ async function sendConfirmationEmail() {
           pass: process.env.PASSWORD
         },
       });
+    var date = new Date();
 
     const mailOptions = {
     from: process.env.MAIL,
-    to: process.env.MAIL,
-    subject: `Confirmation for Registration`,
-    html: `Hello <b>bro</b>,
+    to: data.Email,
+    subject: `Your Order Has Been Successfully Placed!`,
+    html: `<p>Dear ${data.Name}</p>,
 
-<p>We extend our gratitude for your enrollment in <span style="font-weight: bold; background-color: yellow;">hi</span> scheduled for February 8, 2024.</p>
+<p>Thank you for shopping with KVM CMart! We are pleased to inform you that your order has been successfully placed. Our team is processing it, and we will notify you once it's ready for shipment.</p>
 
-<p>Your participation is confirmed!</p>
+<p>Order Details:</p>
+Order Number: 123456
+Date: ${date}
+<p>Below is a summary of your order:</p>
+${productDetailsContent}
 
-<p>The QR code for the verification process has been attached below</p>
+<p>You can track your order and find more details in your account on our website. If you have any questions or need further assistance, feel free to reach out to us at info@kvmcmart.in</p>
 
-<img src=https://api.qrserver.com/v1/create-qr-code/?size=150x150&data= alt="qrcode.jpg">
+<p>We appreciate your business and look forward to serving you again.</p>
 
-<p>We are committed to delivering an engaging, enlightening, and enjoyable experience during the event. Your attendance adds value to the occasion, and we look forward to a memorable time together.</p>
-
-<p>Additionally, If you have any queries or need further assistance, please feel free to reach out to the Products below:</p>
-
-
-<p>Wishing you a fantastic day ahead!</p>
-
-<p>Best Regards,<br>
-Team ICON</p>`
+<p>Best regards,</p>
+<p>KVM CMart Team</p>`
 };
   
 await transporter.sendMail(mailOptions);
