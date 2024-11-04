@@ -1,12 +1,37 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from "@/app/lib/mongodb";
 import Product from "@/app/models/product";
 import mongoose from "mongoose";
 import { Result } from "postcss";
 
 // Define the dynamic route handler
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+
+const getCorsHeaders = (origin: string) => {
+  const headers = {
+    "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+    "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+    "Access-Control-Allow-Origin": ""
+  };
+  if (process.env.DOMAIN_URL.includes(origin)) {
+    headers["Access-Control-Allow-Origin"] = origin; 
+  }
+
+  return headers;
+};
+
+export const OPTIONS = async (request: NextRequest) => {
+  console.log("getting in ");
+  return NextResponse.json(
+    {},
+    {
+      status: 200,
+      headers: getCorsHeaders(request.headers.get("origin") || ""),
+    }
+  );
+};
+export async function POST(request: Request, { params }: { params: { id: string } }) {
   const { id } = params;
+  const {message} = await request.json()
     try {
       await connectDB();
       var data = await Product.findOne({"_id": id});

@@ -1,10 +1,33 @@
 import connectDB from "@/app/lib/mongodb";
 import Product from "@/app/models/product";
-import { NextResponse } from "next/server";
-
+import { NextRequest, NextResponse } from "next/server";
 import { Result } from "postcss";
-export async function GET() {
-  // const { eventname } = await req.json();
+const getCorsHeaders = (origin: string) => {
+  const headers = {
+    "Access-Control-Allow-Methods": process.env.ALLOWED_METHODS,
+    "Access-Control-Allow-Headers": process.env.ALLOWED_HEADERS,
+    "Access-Control-Allow-Origin": ""
+  };
+  if (process.env.DOMAIN_URL.includes(origin)) {
+    headers["Access-Control-Allow-Origin"] = origin; 
+  }
+
+  return headers;
+};
+
+export const OPTIONS = async (request: NextRequest) => {
+  console.log("getting in ");
+  return NextResponse.json(
+    {},
+    {
+      status: 200,
+      headers: getCorsHeaders(request.headers.get("origin") || ""),
+    }
+  );
+};
+
+export async function POST(req) {
+  const { message } = await req.json();
   try {
     await connectDB();
     var data = [];
