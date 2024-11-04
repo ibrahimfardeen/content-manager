@@ -98,6 +98,7 @@ export default function Home() {
     "ibrahimfardeen.n@gmail.com",
     "kailash61203@gmail.com",
     "prem.v.kumar2002@gmail.com",
+    "mohamedjabir5705@gmail.com"
   ];
   if (session && session.user && allowedUsers.includes(session.user.email)) {
     return (
