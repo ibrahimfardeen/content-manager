@@ -32,14 +32,14 @@ export default function Home() {
     setHeader("Loading, Please wait...");
     setData([]);
     const res = await fetch("./api/products", {
-      method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     'message': 'getAll',
-      //   }),
-      // });
+      method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          'message': 'getAll',
+        }),
+
     });
     const response = await res.json();
     console.log(response)
