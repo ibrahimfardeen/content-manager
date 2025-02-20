@@ -203,7 +203,7 @@ export default function Home() {
     return (
       <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-800">
         <div>
-          <p className="text-white">You are not authorized to view this page</p>
+          <p className="text-black">You are not authorized to view this page</p>
           <br />
         </div>
         <button
