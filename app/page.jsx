@@ -101,12 +101,12 @@ export default function Home() {
     "prem.v.kumar2002@gmail.com",
     "mohamedjabir5705@gmail.com",
   ];
-  if (session && session.user && allowedUsers.includes(session.user.email)) {
+  // if (session && session.user && allowedUsers.includes(session.user.email)) {
     return (
       <>
         <div className="border-spacing-y-2 ml-3 mr-3">
-          <button onClick={() => verify()}>Verify</button>
-          <span>
+          {/* <button onClick={() => verify()}>Verify</button> */}
+          {/* <span>
             <button
               type="button"
               onClick={() => signOut()}
@@ -114,7 +114,7 @@ export default function Home() {
             >
               Sign Out
             </button>
-          </span>
+          </span> */}
           <span>
             <button
               type="button"
@@ -228,26 +228,26 @@ export default function Home() {
         {product && <Edit product={product} onclose={handleclose} />}
       </>
     );
-  } else {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-800">
-        <div>
-          <p className="text-black">You are not authorized to view this page</p>
-          <br />
-        </div>
-        <button
-          onClick={() => signIn()}
-          className="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
-        >
-          <img
-            className="w-6 h-6"
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            loading="lazy"
-            alt="google logo"
-          />
-          <span>Sign in</span>
-        </button>
-      </div>
-    );
-  }
+  // } else {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-800">
+  //       <div>
+  //         <p className="text-black">You are not authorized to view this page</p>
+  //         <br />
+  //       </div>
+  //       <button
+  //         onClick={() => signIn()}
+  //         className="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
+  //       >
+  //         <img
+  //           className="w-6 h-6"
+  //           src="https://www.svgrepo.com/show/475656/google-color.svg"
+  //           loading="lazy"
+  //           alt="google logo"
+  //         />
+  //         <span>Sign in</span>
+  //       </button>
+  //     </div>
+  //   );
+  // }
 }
