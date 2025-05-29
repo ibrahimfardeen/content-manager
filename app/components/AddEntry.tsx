@@ -6,7 +6,7 @@ export default function AddEntry({ onclose }) {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Cement");
 
   const handleCloseOnOverlayClick = (e) => {
     onclose();
@@ -30,6 +30,7 @@ export default function AddEntry({ onclose }) {
   };
   const handleSelectVal = (e) => {
     setCategory(e.target.value);
+    console.log(e.target.value)
   };
   const handleSubmit = async (e) => {
     console.log("Submitted");
@@ -38,7 +39,7 @@ export default function AddEntry({ onclose }) {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ category: { name, price, description, photo } }),
+      body: JSON.stringify({ category,name, price, description, photo } ),
     });
     const { msg, success } = await res.json();
     console.log("msg : " + msg);
@@ -68,10 +69,10 @@ export default function AddEntry({ onclose }) {
                   className="border-2 border-gray-300 rounded-md w-full p-2"
                   onChange={handleSelectVal}
                 >
-                  <option>Cement</option>
-                  <option>Steel</option>
-                  <option>Brick</option>
-                  <option>Sand</option>
+                  <option value={"Cement"}>Cement</option>
+                  <option value={"Steel"}>Steel</option>
+                  <option value={"Brick"}>Brick</option>
+                  <option value={"Sand"}>Sand</option>
                 </select>
               </div>
               <div>

@@ -6,13 +6,14 @@ import nodemailer from "nodemailer";
 
 export async function POST(req) {
   const { name, price, description, photo, category } = await req.json();
-
+  await connectDB();
+  console.log(category,"name")
   try {
-    await connectDB();
-
+    console.log(category,"name")
     await Product.create({category,name, price, description, photo, updated: new Date() });
 
     //await sendConfirmationEmail(fullname, email);
+    console.log("tey")
     const data = await Product.find({category})
     return NextResponse.json({
       msg: ["Registered successfully"],
@@ -20,6 +21,7 @@ export async function POST(req) {
       data
     });
   } catch (error) {
+    // console.log(error)
     if (error instanceof mongoose.Error.ValidationError) {
       let errorList = [];
       for (let e in error.errors) {
